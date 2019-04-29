@@ -21,13 +21,13 @@ main(int argc,char *argv[])
       bool end_of_file = false;
       do
       {
-        for(int o = 0; o < ws.ws_row - 2; o++)
+        for(int i = 0; i < ws.ws_row - 2; i++)
         {
-          for(int i = 0; i < ws.ws_col; i++)
+          for(int u = 0; u < ws.ws_col && !end_of_file; u++)
           {
-            int output = fgetc(fd);
             if(output != -1)
             {
+              int output = fgetc(fd);
               printf("%c", output);
             }
             else
@@ -38,12 +38,13 @@ main(int argc,char *argv[])
           if(!end_of_file)
           { printf("\n"); }
         }
+        printf("Press ENTER or b (to get to the previous page)");
         getchar();
       } while(!end_of_file);
     }
     else
     {
-        printf("ERROR\n");
+      printf("ERROR\n");
     }
   return 0;
 }
