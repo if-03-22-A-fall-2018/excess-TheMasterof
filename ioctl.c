@@ -1,6 +1,7 @@
 #include <sys/ioctl.h>
 #include <string.h>
 #include <errno.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -14,13 +15,35 @@ main(int argc,char *argv[])
 		exit(-1);
 	}
 
-	const int lines = ws.ws_row;
-	const int chars = ws.ws_col;
-  
-	FILE* fd = fopen("textfile.txt", "r");
-	int curr_char = fgetc(fd);
-	int used_lines = 0;
-	int chars_in_line = 0;
-	int page = 0;
-
+  FILE* fd = fopen("textfile.txt", "r");
+  if(fd != 0)
+    {
+      bool end_of_file = false;
+      do
+      {
+        for(int o = 0; o < ws.ws_row - 2; o++)
+        {
+          for(int i = 0; i < ws.ws_col; i++)
+          {
+            int output = fgetc(fd);
+            if(output != -1)
+            {
+              printf("%c", output);
+            }
+            else
+            {
+                end_of_file = true;
+            }
+          }
+          if(!end_of_file)
+          { printf("\n"); }
+        }
+        getchar();
+      } while(!end_of_file);
+    }
+    else
+    {
+        printf("ERROR\n");
+    }
+  return 0;
 }
