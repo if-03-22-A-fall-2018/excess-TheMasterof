@@ -46,5 +46,6 @@ main(int argc,char *argv[])
     {
       printf("ERROR\n");
     }
+		fclose(fd);
   return 0;
 }
